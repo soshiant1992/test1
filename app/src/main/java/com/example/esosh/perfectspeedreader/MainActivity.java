@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     double param1,param2;
     int profile=1;
     double waitconstant=80;
-
+boolean play=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +101,22 @@ public class MainActivity extends AppCompatActivity
                 param1*=.99;
                 showToast("param1= "+Double.toString(param1));}
         });
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            if(play){
+            play=false;
+                showToast("pause");
+            }
+            else{
+                play=true;
+                Handler handler = new Handler();
+                handler.postDelayed(periodicUpdate, 100);
+                showToast("play");}
+
+
+            }
+        });
         try {
             FileInputStream  fileInputStream = new FileInputStream(file);
             InputStream epubInputStream = fileInputStream;
@@ -117,7 +133,6 @@ public class MainActivity extends AppCompatActivity
 
             Handler handler = new Handler();
             handler.postDelayed(periodicUpdate, 100 );
-//            tv.setBackgroundColor(10);
         } catch (IOException e) {
             Log.e("epublib", e.getMessage());
         }
@@ -142,6 +157,12 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        play=false;
+        super.onPause();
     }
 
     @Override
@@ -171,7 +192,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.prof1) {
             // Handle the camera action
             profile=1;
@@ -181,7 +201,7 @@ public class MainActivity extends AppCompatActivity
             profile=3;
         } else if (id == R.id.prof4) {
             profile=4;
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.Bgls) {
 
         } else if (id == R.id.nav_send) {
 
@@ -227,12 +247,13 @@ public class MainActivity extends AppCompatActivity
             else if(profile==2){}
             else if(profile==3){}
             else if(profile==4){}
-
-            handler.postDelayed(periodicUpdate,delay);
-
-            count++;
+if(play) {
+    handler.postDelayed(periodicUpdate, delay);
+    count++;
+}
         }
     };
+
     void showToast(String text)
     {
         if(m_currentToast != null)

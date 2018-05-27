@@ -22,14 +22,18 @@
             android:title="profile#4" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="your books">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/Bgls"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="firl last seen" />
             <item
                 android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+            <item
+                android:id="@+id/nav_send2"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
         </menu>
