@@ -27,15 +27,19 @@
             <item
                 android:id="@+id/Bgls"
                 android:icon="@drawable/ic_menu_share"
-                android:title="firl last seen" />
+                android:title="girl last seen" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/Bmgs"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="moderm ghost stories" />
             <item
-                android:id="@+id/nav_send2"
+                android:id="@+id/Btaots"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="adventures of tom soyer" />
+            <item
+            android:id="@+id/Btwotw"
+            android:icon="@drawable/ic_menu_send"
+            android:title="war of the worlds" />
         </menu>
     </item>
 

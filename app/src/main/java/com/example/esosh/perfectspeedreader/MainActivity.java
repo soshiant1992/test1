@@ -67,7 +67,6 @@ boolean play=false;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY code %%%%%%%%%%%%%%%%%%%%%%%%%%%
         resetParameters();
         tv=findViewById(R.id.MainTextView);textlike=new ArrayList<>();
-        File file = new File(Environment.getExternalStorageDirectory() + "/gls.epub");
 
         Button faster = findViewById(R.id.faster) ;
         faster.setOnClickListener(new View.OnClickListener() {
@@ -117,26 +116,8 @@ boolean play=false;
 
             }
         });
-        try {
-            FileInputStream  fileInputStream = new FileInputStream(file);
-            InputStream epubInputStream = fileInputStream;
-            // Load Book from inputStream
-            Book book = (new EpubReader()).readEpub(epubInputStream);
 
-            Log.d("mystuf", String.valueOf(book.getContents().size()));
-            char cbuf[] = new char[10000];
-            book.getContents().get(4).getReader().read(cbuf);
-            String weblike=String.valueOf(cbuf);
-
-            ReadChapter rc =new ReadChapter();
-            rc.doInBackground(weblike);
-
-            Handler handler = new Handler();
-            handler.postDelayed(periodicUpdate, 100 );
-        } catch (IOException e) {
-            Log.e("epublib", e.getMessage());
-        }
-
+openChapter("GLS");
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -202,14 +183,43 @@ boolean play=false;
         } else if (id == R.id.prof4) {
             profile=4;
         } else if (id == R.id.Bgls) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+            openChapter("GLS");
+        } else if (id == R.id.Bmgs) {
+            openChapter("FMGS");
+        } else if (id == R.id.Btaots) {
+        openChapter("TAOS");
+    } else if (id == R.id.Btwotw) {
+            openChapter("TWOTW");
+    }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void openChapter(String bookname){
+        play =false;
+        count=0;
+        textlike.clear();
+        File file = new File(Environment.getExternalStorageDirectory() + "/"+bookname+".epub");
+        try {
+            FileInputStream  fileInputStream = new FileInputStream(file);
+            InputStream epubInputStream = fileInputStream;
+            // Load Book from inputStream
+            Book book = (new EpubReader()).readEpub(epubInputStream);
+
+            Log.d("mystuf", String.valueOf(book.getContents().size()));
+            char cbuf[] = new char[10000];
+            book.getContents().get(4).getReader().read(cbuf);
+            String weblike=String.valueOf(cbuf);
+
+            ReadChapter rc =new ReadChapter();
+            rc.doInBackground(weblike);
+
+            Handler handler = new Handler();
+            handler.postDelayed(periodicUpdate, 100 );
+        } catch (IOException e) {
+            Log.e("epublib", e.getMessage());
+        }
     }
     private class ReadChapter extends AsyncTask<String, Void, Void> {
         @Override
