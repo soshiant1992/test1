@@ -45,6 +45,8 @@ import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.BookProcessor;
 import nl.siegmann.epublib.epub.EpubReader;
 
+import static java.lang.Math.cosh;
+import static java.lang.Math.sin;
 import static java.lang.StrictMath.pow;
 
 public class MainActivity extends AppCompatActivity
@@ -181,10 +183,14 @@ openChapter(4);
             profile=1;
         } else if (id == R.id.prof2) {
             profile=2;
+            param1=1.2;
         } else if (id == R.id.prof3) {
             profile=3;
+            param1=1.2;
+            param2=.5;
         } else if (id == R.id.prof4) {
             profile=4;
+            param1=1.2;
         } else if (id == R.id.Bgls) {
             bookname="GLS";
             openChapter(4);
@@ -247,7 +253,7 @@ if(!elements.isEmpty()){
                 textlike.addAll(Arrays.asList(buf.split("\\s+")));         //   tv.setText(plainText);
 
 
-            }showToast("ended reading it");
+            }//showToast("ended reading it");
                         }else{showToast("this chapter is empty"); }
 
 
@@ -263,15 +269,19 @@ if(!elements.isEmpty()){
             if(textlike.size()>count){
             tv.setText(textlike.get(count));
             long delay=100;//default value 100ms
-            if(profile==1) {
-                delay = (long) (waitconstant * pow((textlike.get(count).length()), param1));
-            }
-            else if(profile==2){
                 int l=textlike.get(count).length();
+            if(profile==1) {
                 delay = (long) (waitconstant * pow(l, param1));
             }
-            else if(profile==3){}
-            else if(profile==4){}
+            else if(profile==2){
+                delay = (long) (waitconstant * cosh(param1*l ));
+            }
+            else if(profile==3){
+                delay = (long) (waitconstant *(param2*l+(1+sin(param1*l))));
+            }
+            else if(profile==4){
+                delay = (long) (waitconstant * pow(param1, l));
+            }
 if(play) {
     handler.postDelayed(periodicUpdate, delay);
     count++;
