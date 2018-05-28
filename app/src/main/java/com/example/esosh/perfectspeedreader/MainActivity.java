@@ -192,7 +192,7 @@ openChapter(4);
             profile=4;
             param1=1.2;
         } else if (id == R.id.Bgls) {
-            bookname="GLS";
+            bookname="ulysses";
             openChapter(4);
         } else if (id == R.id.Bmgs) {
             bookname="FMGS";

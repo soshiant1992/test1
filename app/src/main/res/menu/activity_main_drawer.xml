@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/prof1"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/function"
             android:title="profile#1" />
         <item
             android:id="@+id/prof2"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/function"
             android:title="profile#2" />
         <item
             android:id="@+id/prof3"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/function"
             android:title="profile#3" />
         <item
             android:id="@+id/prof4"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/function"
             android:title="profile#4" />
     </group>
 
@@ -26,19 +26,19 @@
         <menu>
             <item
                 android:id="@+id/Bgls"
-                android:icon="@drawable/ic_menu_share"
-                android:title="girl last seen" />
+                android:icon="@drawable/book"
+                android:title="ulysses" />
             <item
                 android:id="@+id/Bmgs"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/book2"
                 android:title="moderm ghost stories" />
             <item
                 android:id="@+id/Btaots"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/book2"
                 android:title="adventures of tom soyer" />
             <item
             android:id="@+id/Btwotw"
-            android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/book2"
             android:title="war of the worlds" />
         </menu>
     </item>
