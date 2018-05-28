@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity
     double param1,param2;
     int profile=1;
     double waitconstant=80;
-boolean play=false;
+    String bookname="";
+    Handler handler = new Handler();
+
+    boolean play=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,8 +119,8 @@ boolean play=false;
 
             }
         });
-
-openChapter("GLS");
+        bookname="GLS";
+openChapter(4);
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -183,54 +186,59 @@ openChapter("GLS");
         } else if (id == R.id.prof4) {
             profile=4;
         } else if (id == R.id.Bgls) {
-            openChapter("GLS");
+            bookname="GLS";
+            openChapter(4);
         } else if (id == R.id.Bmgs) {
-            openChapter("FMGS");
+            bookname="FMGS";
+            openChapter(4);
         } else if (id == R.id.Btaots) {
-        openChapter("TAOTS");
+            bookname="TAOTS";
+            openChapter(4);
     } else if (id == R.id.Btwotw) {
-            openChapter("TWOTW");
+            bookname="TWOTW";
+            openChapter(5);
     }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void openChapter(String bookname){
+
+    private void openChapter(int chaptrernum){
         play =false;
         count=0;
         textlike.clear();
-        File file = new File(Environment.getExternalStorageDirectory() + "/"+bookname+".epub");
-        try {
-            FileInputStream  fileInputStream = new FileInputStream(file);
-            InputStream epubInputStream = fileInputStream;
-            // Load Book from inputStream
-            Book book = (new EpubReader()).readEpub(epubInputStream);
-
-            Log.d("mystuf", String.valueOf(book.getContents().size()));
-            char cbuf[] = new char[10000];
-            book.getContents().get(4).getReader().read(cbuf);
-            String weblike=String.valueOf(cbuf);
-
-            ReadChapter rc =new ReadChapter();
-            rc.doInBackground(weblike);
-
-            Handler handler = new Handler();
-            handler.postDelayed(periodicUpdate, 100 );
-        } catch (IOException e) {
-            Log.e("epublib", e.getMessage());
-        }
+        ReadChapter rc =new ReadChapter();
+        rc.doInBackground(chaptrernum);
+        handler.postDelayed(periodicUpdate, 100 );
     }
-    private class ReadChapter extends AsyncTask<String, Void, Void> {
-        @Override
-        protected Void doInBackground(String... weblike) {
 
+    private class ReadChapter extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... chaptrernum) {
+            String weblike="";
+            try {  File file = new File(Environment.getExternalStorageDirectory() + "/"+bookname+".epub");
+
+                FileInputStream  fileInputStream = new FileInputStream(file);
+                InputStream epubInputStream = fileInputStream;
+                // Load Book from inputStream
+                Book book = (new EpubReader()).readEpub(epubInputStream);
+
+                Log.d("mystuf", "book content size= "+String.valueOf(book.getContents().size()));
+                char cbuf[] = new char[10000];
+                book.getContents().get(chaptrernum[0]).getReader().read(cbuf);
+                 weblike=String.valueOf(cbuf);
+
+            } catch (IOException e) {
+                Log.e("epublib", e.getMessage());
+            }
+//            showToast("started reading it");
             String selector="p";
             HtmlToPlainText formatter = new HtmlToPlainText();
-            Document doc= Jsoup.parse(weblike[0]);
+            Document doc= Jsoup.parse(weblike);
 
             Elements elements = doc.select(selector); // get each element that matches the CSS selector
-
+if(!elements.isEmpty()){
             for (Element element : elements) {
                 String plainText = formatter.getPlainText(element); // format that element to plain text
 
@@ -239,28 +247,36 @@ openChapter("GLS");
                 textlike.addAll(Arrays.asList(buf.split("\\s+")));         //   tv.setText(plainText);
 
 
-            }
+            }showToast("ended reading it");
+                        }else{showToast("this chapter is empty"); }
+
 
             return null;
 
         }
     }
+
     private Runnable periodicUpdate = new Runnable () {
         Handler handler = new Handler();
 
         public void run() {
+            if(textlike.size()>count){
             tv.setText(textlike.get(count));
             long delay=100;//default value 100ms
             if(profile==1) {
                 delay = (long) (waitconstant * pow((textlike.get(count).length()), param1));
             }
-            else if(profile==2){}
+            else if(profile==2){
+                int l=textlike.get(count).length();
+                delay = (long) (waitconstant * pow(l, param1));
+            }
             else if(profile==3){}
             else if(profile==4){}
 if(play) {
     handler.postDelayed(periodicUpdate, delay);
     count++;
 }
+        }else {showToast("reached the end of chapter"); }
         }
     };
 
