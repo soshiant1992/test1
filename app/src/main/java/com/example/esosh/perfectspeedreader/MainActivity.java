@@ -187,7 +187,7 @@ openChapter("GLS");
         } else if (id == R.id.Bmgs) {
             openChapter("FMGS");
         } else if (id == R.id.Btaots) {
-        openChapter("TAOS");
+        openChapter("TAOTS");
     } else if (id == R.id.Btwotw) {
             openChapter("TWOTW");
     }
