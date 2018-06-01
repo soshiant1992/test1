@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     double waitconstant=80;
     String bookname="";
     Handler handler = new Handler();
-
+int chapter;
     boolean play=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +106,23 @@ public class MainActivity extends AppCompatActivity
                 param1*=.99;
                 showToast("param1= "+Double.toString(param1));}
         });
+
+        Button P2down = findViewById(R.id.P2down) ;
+        P2down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                param2*=.9;
+                showToast("param2= "+Double.toString(param2));}
+        });
+
+        Button P2up = findViewById(R.id.P2up) ;
+        P2up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                param2*=1.1;
+                showToast("param2= "+Double.toString(param2));}
+        });
+
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,18 +197,25 @@ openChapter(4);
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.prof1) {
-            // Handle the camera action
             profile=1;
+            param1=1.7;
+            waitconstant=20;
+            param2=3;
         } else if (id == R.id.prof2) {
             profile=2;
-            param1=1.2;
+            param1=.35;
+            waitconstant=35;
+            param2=3;
         } else if (id == R.id.prof3) {
             profile=3;
-            param1=1.2;
-            param2=.5;
+            param1=3;
+            param2=3;
+            waitconstant=30;
         } else if (id == R.id.prof4) {
             profile=4;
-            param1=1.2;
+            param1=1.3;
+            waitconstant=35;
+            param2=3;
         } else if (id == R.id.Bgls) {
             bookname="ulysses";
             openChapter(4);
@@ -267,21 +291,23 @@ if(!elements.isEmpty()){
         Handler handler = new Handler();
 
         public void run() {
+
             if(textlike.size()>count){
-            tv.setText(textlike.get(count));
-            long delay=100;//default value 100ms
                 int l=textlike.get(count).length();
+                tv.setText(textlike.get(count));
+//                +"\n"+String.valueOf(l)
+            long delay=100;//default value 100ms
             if(profile==1) {
-                delay = (long) (waitconstant * pow(l, param1));
+                delay = (long) (waitconstant *( pow(l, param1)+param2));
             }
             else if(profile==2){
-                delay = (long) (waitconstant * cosh(param1*l ));
+                delay = (long) (waitconstant * (cosh(param1*l )+param2));
             }
             else if(profile==3){
-                delay = (long) (waitconstant *(floor(l/param1)));
+                delay = (long) (waitconstant *(floor(l/param1)+param2));
             }
             else if(profile==4){
-                delay = (long) (waitconstant * pow(param1, l));
+                delay = (long) (waitconstant *( pow(param1, l)+param2));
             }
 if(play) {
     handler.postDelayed(periodicUpdate, delay);
@@ -300,7 +326,7 @@ if(play) {
     }
     void resetParameters(){
         param1=1.3;
-        param2=1;
-        waitconstant=80;
+        param2=3;
+        waitconstant=30;
     }
 }

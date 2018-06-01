@@ -16,7 +16,7 @@
         <item
             android:id="@+id/prof3"
             android:icon="@drawable/function"
-            android:title="floor(l/param1)" />
+            android:title="floor(L/p1)+p2" />
         <item
             android:id="@+id/prof4"
             android:icon="@drawable/function"
