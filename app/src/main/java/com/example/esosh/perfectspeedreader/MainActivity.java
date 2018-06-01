@@ -46,6 +46,7 @@ import nl.siegmann.epublib.epub.BookProcessor;
 import nl.siegmann.epublib.epub.EpubReader;
 
 import static java.lang.Math.cosh;
+import static java.lang.Math.floor;
 import static java.lang.Math.sin;
 import static java.lang.StrictMath.pow;
 
@@ -277,7 +278,7 @@ if(!elements.isEmpty()){
                 delay = (long) (waitconstant * cosh(param1*l ));
             }
             else if(profile==3){
-                delay = (long) (waitconstant *(param2*l+(1+sin(param1*l))));
+                delay = (long) (waitconstant *(floor(l/param1)));
             }
             else if(profile==4){
                 delay = (long) (waitconstant * pow(param1, l));

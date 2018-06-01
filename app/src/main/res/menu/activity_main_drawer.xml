@@ -3,30 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <item android:title="select waiting profile">
+        <menu android:checkableBehavior="single">
         <item
             android:id="@+id/prof1"
             android:icon="@drawable/function"
-            android:title="profile#1" />
+            android:title="L^p1" />
         <item
             android:id="@+id/prof2"
             android:icon="@drawable/function"
-            android:title="profile#2" />
+            android:title="cosh(p1*L)" />
         <item
             android:id="@+id/prof3"
             android:icon="@drawable/function"
-            android:title="profile#3" />
+            android:title="floor(l/param1)" />
         <item
             android:id="@+id/prof4"
             android:icon="@drawable/function"
-            android:title="profile#4" />
-    </group>
-
+            android:title="p1^L" />
+        </menu>
+    </item>
     <item android:title="your books">
-        <menu>
+        <menu android:checkableBehavior="single">
             <item
                 android:id="@+id/Bgls"
-                android:icon="@drawable/book"
+                android:icon="@drawable/book2"
                 android:title="ulysses" />
             <item
                 android:id="@+id/Bmgs"
@@ -44,3 +45,7 @@
     </item>
 
 </menu>
+
+<!--<group android:checkableBehavior="single">-->
+
+
