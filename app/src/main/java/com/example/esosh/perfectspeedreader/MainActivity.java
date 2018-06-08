@@ -208,9 +208,9 @@ openChapter(4);
             param2=3;
         } else if (id == R.id.prof3) {
             profile=3;
-            param1=3;
+            param1=5;
             param2=3;
-            waitconstant=30;
+            waitconstant=50;
         } else if (id == R.id.prof4) {
             profile=4;
             param1=1.3;
@@ -304,7 +304,7 @@ if(!elements.isEmpty()){
                 delay = (long) (waitconstant * (cosh(param1*l )+param2));
             }
             else if(profile==3){
-                delay = (long) (waitconstant *(floor(l/param1)+param2));
+                delay = (long) (waitconstant *(param1*floor(l/param1)+param2));
             }
             else if(profile==4){
                 delay = (long) (waitconstant *( pow(param1, l)+param2));
@@ -325,8 +325,9 @@ if(play) {
         m_currentToast.show();
     }
     void resetParameters(){
-        param1=1.3;
+        profile=1;
+        param1=1.7;
+        waitconstant=20;
         param2=3;
-        waitconstant=30;
     }
 }
