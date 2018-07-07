@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ import static java.lang.StrictMath.pow;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     TextView tv;
+    EditText inputName , inputChapter;
     int count=0;
     String words[];
     List <String> textlike;
@@ -73,6 +76,8 @@ int chapter;
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY code %%%%%%%%%%%%%%%%%%%%%%%%%%%
         resetParameters();
         tv=findViewById(R.id.MainTextView);textlike=new ArrayList<>();
+        inputChapter=findViewById(R.id.chapterT);
+        inputName=findViewById(R.id.nameT);
 
         Button faster = findViewById(R.id.faster) ;
         faster.setOnClickListener(new View.OnClickListener() {
@@ -134,13 +139,19 @@ int chapter;
                 play=true;
                 Handler handler = new Handler();
                 handler.postDelayed(periodicUpdate, 100);
-                showToast("play");}
+//                showToast("play");
+            bookname= String.valueOf(inputName.getText());
+                chapter= Integer.parseInt(String.valueOf(inputChapter.getText()));
+                showToast(String.valueOf(chapter)+ bookname);
+                Log.d("mystuf", String.valueOf(chapter)+ bookname);
+
+            }
 
 
             }
         });
-        bookname="GLS";
-openChapter(4);
+        //bookname="GLS";
+openChapter(chapter);
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
